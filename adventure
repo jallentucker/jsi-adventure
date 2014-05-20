@@ -14,28 +14,37 @@ var startRoom = mazeLogic.init(maze);
 var next = {};
 
 var gameLoop = function(currentRoom) {
-  console.log('You are standing in a room. There are %d doors.', currentRoom.doorCount);
+  if(currentRoom.treasure) {
+    console.log('You found the treasure!');
+    rl.close();
+  } else {
+    console.log('You are standing in a room. There are %d doors.', currentRoom.doorCount);
 	
-  var doorLocationString = '';
-  var doorBoilerplate = 'One is to the ';
-  if(currentRoom.north) {
-    doorLocationString += doorBoilerplate + 'north';
-  }
-  if(currentRoom.west) {
-    doorLocationString += doorBoilerplate + 'west';
-  }
-  if(currentRoom.east) {
-    doorLocationString += doorBoilerplate + 'east';
-  }
-  if(currentRoom.south) {
-    doorLocationString += doorBoilerplate + 'south';
-  }
-  console.log(doorLocationString);
+    var doorLocationString = '';
+    var doorBoilerplate = 'One is to the ';
+    if(currentRoom.north) {
+      doorLocationString += doorBoilerplate + 'north. ';
+    }
+    if(currentRoom.west) {
+      doorLocationString += doorBoilerplate + 'west. ';
+    }
+    if(currentRoom.east) {
+      doorLocationString += doorBoilerplate + 'east. ';
+    }
+    if(currentRoom.south) {
+      doorLocationString += doorBoilerplate + 'south. ';
+    }
+    console.log(doorLocationString);
 
-	rl.question('Which direction do you want to go? ', function(direction) {
-    next = mazeLogic.nextRoom(currentRoom, direction, maze);
-    gameLoop(next);
-  });
+  	rl.question('Which direction do you want to go? ', function(direction) {
+      next = mazeLogic.nextRoom(currentRoom, direction, maze);
+      if(Object.keys(next).length > 0) {
+        gameLoop(next);
+      } else {
+        gameLoop(currentRoom);
+      }
+    });
+  }
 };
 
 gameLoop(startRoom);
