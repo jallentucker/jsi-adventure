@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+var mazeFile = process.argv[2];
+var maze = require(mazeFile);
+
+var readline = require('readline');
+
+var rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+var currentRoom = mazeLogic.init(maze);
+
+var gameLoop = function() {
+	console.log('You are standing in a room. There are %d doors.', 2);
+	console.log('One is to the north, one is to the west.');
+	rl.question('Which direction do you want to go? ', gameLoop);
+};
+
+gameLoop();
