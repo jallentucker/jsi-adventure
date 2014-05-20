@@ -43,6 +43,8 @@ var gameLoop = function(currentRoom) {
       if(Object.keys(next).length > 0) {
         gameLoop(next);
       } else {
+        console.log('You cannot go in that direction!');
+        console.log('');
         gameLoop(currentRoom);
       }
     });
