@@ -2,20 +2,40 @@
 
 var mazeFile = process.argv[2];
 var maze = require(mazeFile);
-
 var readline = require('readline');
+var mazeLogic = require('./mazeLogic');
 
 var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-var currentRoom = mazeLogic.init(maze);
+var startRoom = mazeLogic.init(maze);
+var next = {};
 
-var gameLoop = function() {
-	console.log('You are standing in a room. There are %d doors.', 2);
-	console.log('One is to the north, one is to the west.');
-	rl.question('Which direction do you want to go? ', gameLoop);
+var gameLoop = function(currentRoom) {
+  console.log('You are standing in a room. There are %d doors.', currentRoom.doorCount);
+	
+  var doorLocationString = '';
+  var doorBoilerplate = 'One is to the ';
+  if(currentRoom.north) {
+    doorLocationString += doorBoilerplate + 'north';
+  }
+  if(currentRoom.west) {
+    doorLocationString += doorBoilerplate + 'west';
+  }
+  if(currentRoom.east) {
+    doorLocationString += doorBoilerplate + 'east';
+  }
+  if(currentRoom.south) {
+    doorLocationString += doorBoilerplate + 'south';
+  }
+  console.log(doorLocationString);
+
+	rl.question('Which direction do you want to go? ', function(direction) {
+    next = mazeLogic.nextRoom(currentRoom, direction, maze);
+    gameLoop(next);
+  });
 };
 
-gameLoop();
+gameLoop(startRoom);
