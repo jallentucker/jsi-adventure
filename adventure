@@ -39,7 +39,7 @@ var gameLoop = function(currentRoom) {
 
   	rl.question('Which direction do you want to go? ', function(direction) {
       next = mazeLogic.nextRoom(currentRoom, direction, maze);
-      console.log('\n');
+      console.log('');
       if(Object.keys(next).length > 0) {
         gameLoop(next);
       } else {
