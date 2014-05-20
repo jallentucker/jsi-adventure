@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/jallentucker/jsi-adventure/issues"
   },
-  "homepage": "https://github.com/jallentucker/jsi-adventure"
+  "homepage": "https://github.com/jallentucker/jsi-adventure",
+  "dependencies": {
+    "chalk": "^0.4.0"
+  }
 }

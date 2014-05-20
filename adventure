@@ -4,6 +4,7 @@ var mazeFile = process.argv[2];
 var maze = require(mazeFile);
 var readline = require('readline');
 var mazeLogic = require('./mazeLogic');
+var chalk = require('chalk');
 
 var rl = readline.createInterface({
   input: process.stdin,
@@ -15,7 +16,7 @@ var next = {};
 
 var gameLoop = function(currentRoom) {
   if(currentRoom.treasure) {
-    console.log('You found the treasure!');
+    console.log(chalk.red.bgGreen('You found the treasure!'));
     rl.close();
   } else {
     console.log('You are standing in a room. There are %d doors.', currentRoom.doorCount);
@@ -38,6 +39,7 @@ var gameLoop = function(currentRoom) {
 
   	rl.question('Which direction do you want to go? ', function(direction) {
       next = mazeLogic.nextRoom(currentRoom, direction, maze);
+      console.log('\n');
       if(Object.keys(next).length > 0) {
         gameLoop(next);
       } else {
