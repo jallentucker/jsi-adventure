@@ -13,7 +13,7 @@ var addDoorCount = function(room) {
 };
 
 module.exports.init = function(mazeFileName) {
-	var mazeWithDoorCount = require(mazeFileName);
+  var mazeWithDoorCount = require(mazeFileName);
   var startRoom = '';
   var endRoom = '';
   var roomMapping = {};
@@ -30,7 +30,7 @@ module.exports.init = function(mazeFileName) {
     if(room.treasure) {
       endRoom = room.name;
     }
-	});
+  });
 
   mazeObject = mazeWithDoorCount;
   mazeObject.startRoom = startRoom;

@@ -21,7 +21,7 @@ var gameLoop = function(currentRoom) {
     rl.close();
   } else {
     console.log('You are standing in a room. There are %d doors.', currentRoom.doorCount);
-	
+  
     var doorLocationString = '';
     var doorBoilerplate = 'One is to the ';
     if(currentRoom.north) {
@@ -38,7 +38,7 @@ var gameLoop = function(currentRoom) {
     }
     console.log(doorLocationString);
 
-  	rl.question('Which direction do you want to go? ', function(direction) {
+    rl.question('Which direction do you want to go? ', function(direction) {
       next = mazeLogic.nextRoom(currentRoom, direction);
       console.log('');
       if(next) {
