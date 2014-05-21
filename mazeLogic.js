@@ -1,5 +1,4 @@
-var _ = require('underscore');
-
+var mazeObject = {};
 
 var addDoorCount = function(room) {
   var doors = 0;
@@ -33,31 +32,19 @@ module.exports.init = function(mazeFileName) {
     }
 	});
 
-  module.exports.maze = mazeWithDoorCount;
-  module.exports.maze.startRoom = startRoom;
-  module.exports.maze.endRoom = endRoom;
-  module.exports.maze.roomPositions = roomMapping;
-
-  console.log(exports.maze);
-
+  mazeObject = mazeWithDoorCount;
+  mazeObject.startRoom = startRoom;
+  mazeObject.endRoom = endRoom;
+  mazeObject.roomPositions = roomMapping;
 };
 
 module.exports.start = function() {
-  var startRoom = {};
-  startRoom = _.find(exports.maze.rooms, function(obj) {
-    return(obj.name === module.exports.maze.startRoom);
-  });
-
-  return startRoom;
+  return mazeObject.rooms[mazeObject.roomPositions[mazeObject.startRoom]];
 };
 
 module.exports.nextRoom = function(currentRoom, direction) {
   var newRoomLetter = currentRoom[direction];
-  var newRoom;
-
-  newRoom = _.find(module.exports.maze.rooms, function(obj) {
-    return(obj.name === newRoomLetter);
-  });
-
+  var newRoom = mazeObject.rooms[mazeObject.roomPositions[newRoomLetter]];
+  
   return newRoom;
 };
