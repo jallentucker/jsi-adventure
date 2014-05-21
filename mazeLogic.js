@@ -55,5 +55,10 @@ module.exports.nextRoom = function(currentRoom, direction) {
       addDoorCount(newRoom);
     }
   });
-  return newRoom;
+  
+  if(_.isEmpty(newRoom)) {
+    return undefined;
+  } else {
+    return newRoom;
+  }
 };
