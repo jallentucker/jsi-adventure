@@ -17,10 +17,14 @@ module.exports.init = function(mazeFileName) {
 	var mazeWithDoorCount = require(mazeFileName);
   var startRoom = '';
   var endRoom = '';
+  var roomMapping = {};
+  var arrCounter = 0;
 
   var roomWithDoorCount = {};
   mazeWithDoorCount.rooms.forEach(function(room) {
     roomWithDoorCount = addDoorCount(room);
+    roomMapping[room.name] = arrCounter;
+    arrCounter++; 
     if(room.entrance) {
       startRoom = room.name;
     }
@@ -32,6 +36,10 @@ module.exports.init = function(mazeFileName) {
   module.exports.maze = mazeWithDoorCount;
   module.exports.maze.startRoom = startRoom;
   module.exports.maze.endRoom = endRoom;
+  module.exports.maze.roomPositions = roomMapping;
+
+  console.log(exports.maze);
+
 };
 
 module.exports.start = function() {
@@ -45,18 +53,11 @@ module.exports.start = function() {
 
 module.exports.nextRoom = function(currentRoom, direction) {
   var newRoomLetter = currentRoom[direction];
-  var newRoom = {};
+  var newRoom;
 
-  module.exports.maze.rooms.forEach(function(room) {
-    if(room.name === newRoomLetter) {
-      newRoom = room;
-      addDoorCount(newRoom);
-    }
+  newRoom = _.find(module.exports.maze.rooms, function(obj) {
+    return(obj.name === newRoomLetter);
   });
 
-  if(_.isEmpty(newRoom)) {
-    return undefined;
-  } else {
-    return newRoom;
-  }
+  return newRoom;
 };
