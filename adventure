@@ -44,7 +44,7 @@ var gameLoop = function(currentRoom) {
       if(next) {
         gameLoop(next);
       } else {
-        console.log('You cannot go in that direction!');
+        console.log(chalk.red('You cannot go in that direction!'));
         console.log('');
         gameLoop(currentRoom);
       }
