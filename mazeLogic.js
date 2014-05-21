@@ -3,13 +3,11 @@ var _ = require('underscore');
 
 var addDoorCount = function(room) {
   var doors = 0;
-  for(var prop in room) {
-    if((prop === 'east' || prop === 'north' ||
-       prop === 'south' || prop === 'west') && 
-       room[prop]) {
-      doors++;
-    }
-  }
+  
+  if(room.east)  { doors++; }
+  if(room.west)  { doors++; }
+  if(room.north) { doors++; }
+  if(room.south) { doors++; }
 
   room.doorCount = doors;
   return room;
@@ -55,7 +53,7 @@ module.exports.nextRoom = function(currentRoom, direction) {
       addDoorCount(newRoom);
     }
   });
-  
+
   if(_.isEmpty(newRoom)) {
     return undefined;
   } else {
